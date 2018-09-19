@@ -20,6 +20,9 @@ import configparser
 import socket
 from datetime import datetime as dt 
 
+sys.path.append(os.path.dirname(__file__) + '/lib')
+from pwhelper import PWHelper
+
 configfile = os.path.dirname(__file__) + '/mysql2file.cfg'
 cursorfile = os.path.dirname(__file__) + '/.cursor'
 
@@ -32,7 +35,7 @@ timeformat = config['Database']['TimeFormat']
 db = MySQLdb.connect(
         host=config['Database']['Host'], 
         user=config['Database']['User'], 
-        passwd=config['Database']['Password'], 
+        passwd=PWHelper.decode(config['Database']['Password']), 
         db=config['Database']['Name'])
 
 with open(config['Logging']['File'], "a") as logfile:
